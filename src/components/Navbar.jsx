@@ -17,7 +17,6 @@ const Navbar = () => {
       background: '#eee'
     }}>
       <NavLink to="/" style={linkStyle}>Home</NavLink>
-      <NavLink to="/class" style={linkStyle}>Class</NavLink>
       <NavLink to="/student" style={linkStyle}>Student</NavLink>
       <NavLink to="/faculty" style={linkStyle}>Faculty</NavLink>
       <NavLink to="/contact" style={linkStyle}>Contact Us</NavLink>
