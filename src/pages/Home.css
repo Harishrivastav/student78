@@ -1,0 +1,57 @@
+/* Main container to take full screen and allow footer at bottom */
+.home-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content area (image + notifications) */
+.home-content {
+  flex: 1;
+  position: relative;
+  background-image: url("https://th.bing.com/th/id/OIP.oCjeDefLqEdNWo2k74l8hQHaE9?w=262&h=180&c=7&r=0&o=7&cb=12&pid=1.7&rm=3");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Notifications container */
+.notifications-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 400px;       /* Maximum height before scroll appears */
+  overflow-y: auto;        /* Enable vertical scroll if content exceeds max-height */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-sizing: border-box;
+}
+
+/* Notifications header */
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Close button */
+.close-btn {
+  cursor: pointer;
+}
+
+/* Individual notification message */
+.notification-message {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+.notification-message:last-child {
+  border-bottom: none;
+}
