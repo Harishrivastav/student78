@@ -15,13 +15,16 @@ const StudentLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:4000/api/student/login', { email, password });
+      const res = await axios.post('https://stdbackend-lg7x.onrender.com/api/student/login', { email, password });
       
       if (res.data.success) {
+        console.log("00succes");
         alert(res.data.message);
         localStorage.setItem('studentEmail', email);
         localStorage.setItem('token', res.data.token);
+        console.log("[rpfile ");
         navigate('/student/profile');
+        console.log("profile page navigatwe");
       } else {
         alert(res.data.message || 'Invalid Credentials');
       }

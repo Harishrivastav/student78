@@ -13,7 +13,7 @@ const StudentProfile = () => {
     
     const fetchProfile = async () => {
       try {
-        const res = await fetch(`http://localhost:4000/api/student/profile/${email}`, {
+        const res = await fetch(`https://stdbackend-lg7x.onrender.com/api/student/profile/${email}`, {
           method: 'GET',
           headers: { "Content-Type": "application/json" }
         });

@@ -17,7 +17,7 @@ export default function FacultyForm({ onSuccess }) {
 
     try {
       // POST for faculty register (full URL)
-      await axios.post('http://localhost:4000/api/faculty/register', payload)
+      await axios.post('https://stdbackend-lg7x.onrender.com/api/faculty/register', payload)
       onSuccess && onSuccess()
     } catch(err) {
       alert(err.response?.data?.msg || 'Error')

@@ -1,7 +1,5 @@
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import { Container } from "reactstrap";
 
 export default function StudentRegister() {
   const [form, setForm] = useState({
@@ -19,19 +17,28 @@ export default function StudentRegister() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // ✅ Check if required fields are filled
+    if (!form.email || !form.password) {
+      alert("Email and Password are required!");
+      return;
+    }
+
+    // Optional: convert age and marks to numbers to match schema
+    const payload = { ...form, age: Number(form.age), marks: Number(form.marks) };
+
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/student/register",
-        form,
+        "https://stdbackend-lg7x.onrender.com/api/student/register",
+        payload,
         { headers: { "Content-Type": "application/json" } }
       );
       alert(res.data.msg);
-      // Reset form after success
       setForm({
         name: "",
         className: "",
@@ -45,12 +52,14 @@ export default function StudentRegister() {
         password: ""
       });
     } catch (err) {
-      alert(err.response?.data?.msg || "Error registering student");
+      // Show backend error message
+      alert(err.response?.data?.msg || "Server error!");
     }
   };
 
   return (
-    <Container className="mt-4" style={{ maxWidth: 500 }}>
+    <div style={{ maxWidth: 500, margin: "20px auto" }}>
+      <h2>Student Registration</h2>
       <form onSubmit={handleSubmit}>
         {[
           "name",
@@ -64,22 +73,22 @@ export default function StudentRegister() {
           "email",
           "password"
         ].map((key) => (
-          <div key={key} className="mb-3">
-            <label className="form-label">{key}</label>
+          <div key={key} style={{ marginBottom: 10 }}>
+            <label>{key}</label>
             <input
-              name={key}
               type={key === "password" ? "password" : "text"}
+              name={key}
               value={form[key]}
               onChange={handleChange}
-              className="form-control"
-              required
+              required={key === "email" || key === "password"} // make email/password required
+              style={{ width: "100%", padding: 6 }}
             />
           </div>
         ))}
-        <button type="submit" className="btn btn-primary w-100">
+        <button type="submit" style={{ padding: "10px 15px", background: "#007bff", color: "white", border: "none", cursor: "pointer" }}>
           Register Student
         </button>
       </form>
-    </Container>
+    </div>
   );
 }
