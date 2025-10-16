@@ -1,44 +1,85 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from "react";
+import { Container } from "reactstrap";
 
-export default function StudentForm({ student, onSuccess }) {
+export default function StudentRegister() {
   const [form, setForm] = useState({
-    name: '',
-    className: '',
-    age: '',
-    marks: '',
-    address: '',
-    parents: '',
-    category: '',
-    gender: ''
-  })
+    name: "",
+    className: "",
+    age: "",
+    marks: "",
+    address: "",
+    parents: "",
+    category: "",
+    gender: "",
+    email: "",
+    password: ""
+  });
 
-  useEffect(() => {
-    if (student) setForm({ ...student })
-  }, [student])
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const change = e => setForm({ ...form, [e.target.name]: e.target.value })
-
-  const submit = async e => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      if (student) await axios.put('/api/students/' + student._id, form)
-      else await axios.post('/api/students', form)
-      onSuccess && onSuccess()
+      const res = await axios.post(
+        "http://localhost:4000/api/student/register",
+        form,
+        { headers: { "Content-Type": "application/json" } }
+      );
+      alert(res.data.msg);
+      // Reset form after success
+      setForm({
+        name: "",
+        className: "",
+        age: "",
+        marks: "",
+        address: "",
+        parents: "",
+        category: "",
+        gender: "",
+        email: "",
+        password: ""
+      });
     } catch (err) {
-      alert('Error')
+      alert(err.response?.data?.msg || "Error registering student");
     }
-  }
+  };
 
   return (
-    <form onSubmit={submit} style={{ maxWidth: 500 }}>
-      {Object.keys(form).map(k => (
-        <div key={k} style={{ margin: '8px 0' }}>
-          <label style={{ display: 'block', marginBottom: 6 }}>{k}</label>
-          <input name={k} value={form[k] || ''} onChange={change} required />
-        </div>
-      ))}
-      <button type="submit">{student ? 'Update' : 'Add'} Student</button>
-    </form>
-  )
+    <Container className="mt-4" style={{ maxWidth: 500 }}>
+      <form onSubmit={handleSubmit}>
+        {[
+          "name",
+          "className",
+          "age",
+          "marks",
+          "address",
+          "parents",
+          "category",
+          "gender",
+          "email",
+          "password"
+        ].map((key) => (
+          <div key={key} className="mb-3">
+            <label className="form-label">{key}</label>
+            <input
+              name={key}
+              type={key === "password" ? "password" : "text"}
+              value={form[key]}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
+          </div>
+        ))}
+        <button type="submit" className="btn btn-primary w-100">
+          Register Student
+        </button>
+      </form>
+    </Container>
+  );
 }
