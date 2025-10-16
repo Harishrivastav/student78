@@ -8,7 +8,7 @@ const StudentForgetPassword = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:4000/api/student/send-otp", { email });
+      await axios.post("https://stdbackend-lg7x.onrender.com/api/student/send-otp", { email });
       setMessage('Password reset link sent to your email.');
     } catch {
       setMessage('Error sending reset link. Try again.');

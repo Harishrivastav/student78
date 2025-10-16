@@ -8,7 +8,7 @@ const FacultyForgetPassword = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      await axios.post('https://your-backend-api.com/faculty/forgot-password', { email })
+      await axios.post('https://stdbackend-lg7x.onrender.com/api/faculty/send-otp', { email })
       setMessage('Password reset link sent to your email.')
     } catch {
       setMessage('Error sending reset link. Try again.')
